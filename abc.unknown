@@ -1,0 +1,117 @@
+/*
+SQLyog Enterprise - MySQL GUI v8.02 RC
+MySQL - 5.5.5-10.4.17-MariaDB : Database - mediquick
+*********************************************************************
+*/
+
+/*!40101 SET NAMES utf8 */;
+
+/*!40101 SET SQL_MODE=''*/;
+
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+
+CREATE DATABASE /*!32312 IF NOT EXISTS*/`mediquick` /*!40100 DEFAULT CHARACTER SET utf8mb4 */;
+
+USE `mediquick`;
+
+/*Table structure for table `admindata` */
+
+DROP TABLE IF EXISTS `admindata`;
+
+CREATE TABLE `admindata` (
+  `name` varchar(20) DEFAULT NULL,
+  `address` varchar(100) DEFAULT NULL,
+  `contact` varchar(10) DEFAULT NULL,
+  `email` varchar(20) NOT NULL,
+  PRIMARY KEY (`email`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+/*Data for the table `admindata` */
+
+insert  into `admindata`(`name`,`address`,`contact`,`email`) values ('Ayush','Mokhapada ','7875648711','ayush@gmail.com'),('Runjhun ','Talwandi','8529154987','runjhun@gmail.com');
+
+/*Table structure for table `logindata` */
+
+DROP TABLE IF EXISTS `logindata`;
+
+CREATE TABLE `logindata` (
+  `email` varchar(20) NOT NULL,
+  `password` varchar(20) DEFAULT NULL,
+  `usertype` varchar(10) DEFAULT NULL,
+  PRIMARY KEY (`email`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+/*Data for the table `logindata` */
+
+insert  into `logindata`(`email`,`password`,`usertype`) values ('ama@gmail.com','41','medical'),('ar@gmail.com','2729','medical'),('ayush@gmail.com','a123','admin'),('delta@gmail.com','978','medical'),('rb@gmail.com','0705','medical'),('runjhun@gmail.com','14','admin');
+
+/*Table structure for table `medicaldata` */
+
+DROP TABLE IF EXISTS `medicaldata`;
+
+CREATE TABLE `medicaldata` (
+  `name` varchar(20) DEFAULT NULL,
+  `owner_name` varchar(20) DEFAULT NULL,
+  `license_number` varchar(10) DEFAULT NULL,
+  `address` varchar(100) DEFAULT NULL,
+  `contact` varchar(10) DEFAULT NULL,
+  `email` varchar(20) NOT NULL,
+  PRIMARY KEY (`email`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+/*Data for the table `medicaldata` */
+
+insert  into `medicaldata`(`name`,`owner_name`,`license_number`,`address`,`contact`,`email`) values ('Amaan pharmacy','amaan','1254','rampura','488741638','ama@gmail.com'),('ar','ayush','a123','ffbrgkef','785487648','ar@gmail.com'),('Delta Pharma','Sanjeev','21/74','Rampura','9788547960','delta@gmail.com');
+
+/*Table structure for table `medicinedata` */
+
+DROP TABLE IF EXISTS `medicinedata`;
+
+CREATE TABLE `medicinedata` (
+  `med_id` int(100) NOT NULL AUTO_INCREMENT,
+  `med_name` varchar(100) DEFAULT NULL,
+  `med_type` varchar(100) DEFAULT NULL,
+  `company` varchar(100) DEFAULT NULL,
+  `lno` varchar(100) DEFAULT NULL,
+  `unit_price` double DEFAULT NULL,
+  `email_medical` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`med_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8mb4;
+
+/*Data for the table `medicinedata` */
+
+insert  into `medicinedata`(`med_id`,`med_name`,`med_type`,`company`,`lno`,`unit_price`,`email_medical`) values (21,'paracetamol','prescribed','cipla','a123',11,'ar@gmail.com'),(22,'Carbol','prescribed','lupin','a111',13,'Rb@gmail.com'),(23,'Crocin','prescribed','sun pharma','332q',27,'Rb@gmail.com'),(24,'Controlled drugs','Aspirin','cipla','qz123',30,'Rb@gmail.com'),(25,'Zifi lbx 200','prescribed','lupin','321ta1',41,'Rb@gmail.com'),(26,'azithromycin','prescribed','cipla','zbat36',45,'Rb@gmail.com'),(27,'Norflex tz','prescribed','cipla','yz123',23,'Rb@gmail.com'),(28,'limci','recommended','Abbott','adwd2323',7,'ar@gmail.com'),(29,'tusq-d','Syrup','cipla','1212ytu',130,'ar@gmail.com'),(30,'Amroyl mv','prescribed','DR.Reddy','aqw2e',54,'ar@gmail.com'),(31,'Orasore','prescribed','Lupin','3wnd22',11,'ar@gmail.com');
+
+/*Table structure for table `medicine_with_medical` */
+
+DROP TABLE IF EXISTS `medicine_with_medical`;
+
+/*!50001 DROP VIEW IF EXISTS `medicine_with_medical` */;
+/*!50001 DROP TABLE IF EXISTS `medicine_with_medical` */;
+
+/*!50001 CREATE TABLE `medicine_with_medical` (
+  `med_id` int(100) NOT NULL,
+  `med_name` varchar(100) DEFAULT NULL,
+  `med_type` varchar(100) DEFAULT NULL,
+  `company` varchar(100) DEFAULT NULL,
+  `lno` varchar(100) DEFAULT NULL,
+  `unit_price` double DEFAULT NULL,
+  `email_medical` varchar(100) DEFAULT NULL,
+  `name` varchar(20) DEFAULT NULL,
+  `owner_name` varchar(20) DEFAULT NULL,
+  `license_number` varchar(10) DEFAULT NULL,
+  `address` varchar(100) DEFAULT NULL,
+  `contact` varchar(10) DEFAULT NULL,
+  `email` varchar(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 */;
+
+/*View structure for view medicine_with_medical */
+
+/*!50001 DROP TABLE IF EXISTS `medicine_with_medical` */;
+/*!50001 DROP VIEW IF EXISTS `medicine_with_medical` */;
+
+/*!50001 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `medicine_with_medical` AS (select `medicinedata`.`med_id` AS `med_id`,`medicinedata`.`med_name` AS `med_name`,`medicinedata`.`med_type` AS `med_type`,`medicinedata`.`company` AS `company`,`medicinedata`.`lno` AS `lno`,`medicinedata`.`unit_price` AS `unit_price`,`medicinedata`.`email_medical` AS `email_medical`,`medicaldata`.`name` AS `name`,`medicaldata`.`owner_name` AS `owner_name`,`medicaldata`.`license_number` AS `license_number`,`medicaldata`.`address` AS `address`,`medicaldata`.`contact` AS `contact`,`medicaldata`.`email` AS `email` from (`medicinedata` join `medicaldata`) where `medicinedata`.`email_medical` = `medicaldata`.`email`) */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
