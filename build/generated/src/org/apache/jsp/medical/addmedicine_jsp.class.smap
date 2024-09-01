@@ -1,0 +1,17 @@
+SMAP
+addmedicine_jsp.java
+JSP
+*S JSP
+*F
++ 0 medical.jsp
+medical/medical.jsp
++ 1 addmedicine.jsp
+medical/addmedicine.jsp
++ 2 medical1.jsp
+medical/medical1.jsp
+*L
+1,57:50
+1#1,47:107
+1#2,21:153
+47#1:174,2
+*E

@@ -1,0 +1,17 @@
+SMAP
+medicalreg_jsp.java
+JSP
+*S JSP
+*F
++ 0 admin.jsp
+admin/admin.jsp
++ 1 medicalreg.jsp
+admin/medicalreg.jsp
++ 2 admin1.jsp
+admin/admin1.jsp
+*L
+1,66:50
+1#1,50:115
+1#2,22:164
+50#1,2:185
+*E
